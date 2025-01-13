@@ -1,39 +1,39 @@
-import { openPopup } from "./modal.js";
 // @todo: Функция создания карточки
 const cardTemplate = document.querySelector("#card-template").content;
-export function createCard(cardData) {
+export function createCard(cardData, openImagePopUp) {
   const cardElement = cardTemplate.querySelector(".card").cloneNode(true);
-  const cardImage = cardElement.querySelector(".card__image");
-  const cardTitle = cardElement.querySelector(".card__title");
   const deleteButton = cardElement.querySelector(".card__delete-button");
   const likeButton = cardElement.querySelector(".card__like-button");
-  const popupImageBig = document.querySelector('.popup_type_image');
-  const popupImage = document.querySelector('.popup__image');
-  const popupTitle = document.querySelector('.popup__caption');
+  const cardImage = cardElement.querySelector(".card__image");
+  const cardTitle = cardElement.querySelector(".card__title");
 
   cardImage.src = cardData.link;
   cardImage.alt = "фотография " + cardData.name;
   cardTitle.textContent = cardData.name;
 
-  function deleteCard(cardElement) {
-    cardElement.remove();
-  }
+  cardImage.addEventListener("click", function () {
+    const imageData = {
+      name: cardData.name,
+      link: cardData.link
+    }
+    openImagePopUp(imageData);
+  })
+
+  likeButton.addEventListener("click", function () {
+    toggleLikeButton(likeButton);
+  });
 
   deleteButton.addEventListener("click", function () {
     deleteCard(cardElement);
   });
 
-  likeButton.addEventListener("click", function () {
-    likeButton.classList.toggle("card__like-button_is-active");
-  });
-
-  cardImage.addEventListener("click", function () {
-    openPopup(popupImageBig);
-    popupImage.src = cardImage.src;
-    popupImage.alt = cardImage.alt;
-    popupTitle.textContent = cardTitle.textContent;
-  })
-
   return cardElement;
 }
 
+function deleteCard(cardElement) {
+  cardElement.remove();
+}
+
+function toggleLikeButton(likeButton) {
+  likeButton.classList.toggle("card__like-button_is-active");
+}
