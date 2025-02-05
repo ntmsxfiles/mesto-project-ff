@@ -24,4 +24,3 @@ export function closePopup(popup) {
   document.removeEventListener('keydown', handleEscClose)
 
 }
-
