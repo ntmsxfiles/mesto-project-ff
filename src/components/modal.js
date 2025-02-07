@@ -8,8 +8,8 @@ export function openPopup(popup) {
 export function closePopup(popup) {
   popup.classList.remove("popup_is-opened");
 
-  popup.removeEventListener('click', popup._handleClickClose);
-  document.removeEventListener('keydown', popup._handleEscClose);
+  popup.removeEventListener('click', handleClickClose);
+  document.removeEventListener('keydown', handleEscClose);
 }
 
 function handleClickClose(evt) {
